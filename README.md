@@ -1,8 +1,8 @@
-[![image](https://github.com/Richard9394/MingCute/raw/main/MingCute_cover.png "MingCute Icon")](https://www.mingcute.com/)
+[![image](https://raw.githubusercontent.com/mingcute-design/mingcute-docs/main/images/MingCute_cover.png "MingCute Icon")](https://www.mingcute.com/)
 [![npm](https://img.shields.io/npm/v/mingcute_icon.svg?labelColor=4A4A4A&color=007AFF&style=shield)](https://www.npmjs.com/package/mingcute_icon)
 [![stars](https://img.shields.io/github/stars/Richard9394/MingCute.svg?labelColor=4A4A4A&color=FE7D37&style=shield)](https://github.com/Richard9394/MingCute/stargazers)
 [![downloads](https://img.shields.io/npm/dt/mingcute_icon.svg?labelColor=4A4A4A&color=23AF5F&style=shield)](https://www.npmjs.com/package/mingcute_icon)
-[![twitter](https://img.shields.io/twitter/follow/MingCute_icon.svg?label=MingCute_icon&style=social)](https://twitter.com/MingCute_icon)
+[![twitter](https://img.shields.io/twitter/follow/MingCute_icon.svg?label=MingCute_icon&style=social)](https://x.com/MingCute_icon)
 
 # MingCute Icon
 
@@ -49,7 +49,7 @@ Copy the font files from  `/fonts` and import the `mingcute.css` file. Add icon 
 
 ## React
 
-Import icons as standard React components  through [`@mingcute/react`](https://www.npmjs.com/package/@mingcute/react) package.. All icons accept `size` and `color` props.
+Import icons as standard React components through [`@mingcute/react`](https://www.npmjs.com/package/@mingcute/react) package. All icons accept `size` and `color` props.
 
 ```TypeScript
 import { MingcuteFill, Home1Line, SearchLine } from '@mingcute/react';
@@ -70,11 +70,36 @@ function App() {
 }
 ```
 
-For more details, see the [documentation](https://github.com/Richard9394/MingCute/tree/main/react).
+For more details, see the [documentation](React_README.md).
+
+## Vue
+
+Import icons as standard Vue components through [`@mingcute/vue`](https://www.npmjs.com/package/@mingcute/vue) package. All icons accept `size` and `color` props.
+
+```TypeScript
+<template>
+  <div>
+    {/* Default: 24px size and currentColor */}
+    <MingcuteFill />
+
+    {/* Custom size and color */}
+    <Home1Line size={32} color="#007AFF" />
+
+    {/* Inherits standard SVG props */}
+    <SearchLine opacity={0.5} />
+  </div>
+</template>
+
+<script setup>
+import { MingcuteFill, Home1Line, SearchLine } from '@mingcute/vue';
+</script>
+```
+
+For more details, see the [documentation](Vue_README.md).
 
 ## Figma Plug
 
-[![image](https://github.com/Richard9394/MingCute/raw/main/update/figmaplug.png "MingCute Figma Plug")](https://www.figma.com/community/plugin/1306884809438005528/mingcute-icon)
+[![image](https://raw.githubusercontent.com/mingcute-design/mingcute-docs/main/images/figmaplug.png "MingCute Figma Plug")](https://www.figma.com/community/plugin/1306884809438005528/mingcute-icon)
 
 [MingCute Icons Figma plugin](https://www.figma.com/community/plugin/1306884809438005528/mingcute-icon)
 
@@ -86,8 +111,8 @@ For more details, see the [documentation](https://github.com/Richard9394/MingCut
 - [MGC Animation icons ](https://www.mingcute.com/animation)- 120+ lively and smooth animated icons
 
 ## Preview
-![image](https://github.com/Richard9394/MingCute/raw/main/MingCute_icon.png "MingCute Icon")
+![image](https://raw.githubusercontent.com/mingcute-design/mingcute-docs/main/images/MingCute_icon.png "MingCute Icon")
 
 ## License
-MingCute icon is available under [Apache-2.0 License](https://github.com/Richard9394/MingCute/blob/main/LICENSE). Feel free to use the set in both personal and commercial projects. Attribution is much appreciated but not required. The only thing we ask is that these icons are not for sale.
+MingCute icon is available under [Apache-2.0 License](https://github.com/mingcute-design/mingcute-icons/blob/main/LICENSE). Feel free to use the set in both personal and commercial projects. Attribution is much appreciated but not required. The only thing we ask is that these icons are not for sale.
 
