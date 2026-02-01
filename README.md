@@ -70,7 +70,7 @@ function App() {
 }
 ```
 
-For more details, see the [documentation](React_README.md).
+For more details, see the [documentation](https://github.com/mingcute-design/mingcute-docs/blob/main/readme/react/README.md).
 
 ## Vue
 
@@ -95,7 +95,7 @@ import { MingcuteFill, Home1Line, SearchLine } from '@mingcute/vue';
 </script>
 ```
 
-For more details, see the [documentation](Vue_README.md).
+For more details, see the [documentation](https://github.com/mingcute-design/mingcute-docs/blob/main/readme/vue/README.md).
 
 ## Figma Plug
 
