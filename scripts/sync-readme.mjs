@@ -7,6 +7,11 @@ const ROOT_DIR = path.resolve(__dirname, '..');
 
 const TASKS = [
   {
+    name: 'Root',
+    url: 'https://raw.githubusercontent.com/mingcute-design/mingcute-docs/main/readme/mingcute/README.md',
+    dest: path.join(ROOT_DIR, 'README.md'),
+  },
+  {
     name: 'React',
     url: 'https://raw.githubusercontent.com/mingcute-design/mingcute-docs/main/readme/react/README.md',
     dest: path.join(ROOT_DIR, 'packages/mingcute-react/README.md'),
