@@ -1,0 +1,67 @@
+{
+  "name": "@mingcute/font",
+  "version": "3.0.0",
+  "description": "Mingcute WOFF2 icon fonts, CSS mappings, and codepoint metadata.",
+  "keywords": [
+    "icons",
+    "font",
+    "woff2",
+    "css",
+    "mingcute"
+  ],
+  "license": "Apache-2.0",
+  "author": "MingCute Design",
+  "homepage": "https://www.mingcute.com/",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mingcute-design/mingcute-icons.git",
+    "directory": "packages/font"
+  },
+  "bugs": {
+    "url": "https://github.com/mingcute-design/mingcute-icons/issues"
+  },
+  "private": false,
+  "type": "module",
+  "exports": {
+    "./core-regular.min.css": "./dist/css/core-regular.min.css",
+    "./core-filled.min.css": "./dist/css/core-filled.min.css",
+    "./bundle.min.css": "./dist/css/bundle.min.css",
+    "./fonts/*": "./dist/fonts/*",
+    "./metadata/*": "./dist/metadata/*"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build:tooling": "tsc -p tsconfig.json",
+    "codepoints:update": "pnpm run build:tooling && node scripts/update-codepoints.mjs",
+    "codepoints:check": "pnpm run build:tooling && node scripts/update-codepoints.mjs --check",
+    "codepoints:stability": "pnpm run build:tooling && node scripts/codepoint-check.mjs",
+    "build": "pnpm run clean && pnpm run build:tooling && node scripts/build-package.mjs",
+    "typecheck": "tsc -p tsconfig.typecheck.json",
+    "test": "pnpm run build && node --test tests/*.test.mjs",
+    "audit:pack": "node scripts/audit-pack.mjs",
+    "check": "pnpm run typecheck && pnpm run test && pnpm run audit:pack",
+    "clean": "node ../../scripts/clean-package.mjs dist .tooling"
+  },
+  "devDependencies": {
+    "@mingcute/compiler": "workspace:*",
+    "@mingcute/core": "workspace:*",
+    "canvas": "npm:@napi-rs/canvas@^0.1.80",
+    "@types/node": "^22.10.0",
+    "fontkit": "^2.0.4",
+    "jsdom": "^16.7.0",
+    "paper": "^0.12.18",
+    "paperjs-offset": "^1.0.8",
+    "svg2ttf": "^6.1.0",
+    "svgpath": "^2.6.0",
+    "ttf2woff2": "^8.0.1",
+    "typescript": "^5.7.2"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "sideEffects": true
+}
