@@ -1,0 +1,8 @@
+{
+  "extends": "./tsconfig.tooling.json",
+  "compilerOptions": {
+    "noEmit": true,
+    "rootDir": "."
+  },
+  "include": ["src/tooling/**/*.ts"]
+}
