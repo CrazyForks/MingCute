@@ -1,0 +1,16 @@
+{
+  "schemaVersion": 1,
+  "version": "3.0.0",
+  "requiredPackages": [
+    "@mingcute/icons",
+    "@mingcute/svg",
+    "@mingcute/font",
+    "@mingcute/react",
+    "@mingcute/vue",
+    "@mingcute/react-native",
+    "@mingcute/svelte",
+    "@mingcute/solid",
+    "@mingcute/vanilla",
+    "@mingcute/web-components"
+  ]
+}
