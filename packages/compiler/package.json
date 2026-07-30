@@ -46,5 +46,9 @@
     "typescript": "^5.7.2"
   },
   "sideEffects": false,
-  "keywords": []
+  "keywords": [
+    "svg-icons",
+    "vector-icons",
+    "icon-library"
+  ]
 }

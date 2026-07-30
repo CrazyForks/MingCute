@@ -4,6 +4,9 @@
   "description": "Mingcute SVG icon components for Svelte.",
   "keywords": [
     "icons",
+    "svg-icons",
+    "vector-icons",
+    "icon-library",
     "svg",
     "svelte",
     "mingcute"

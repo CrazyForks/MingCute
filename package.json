@@ -3,6 +3,11 @@
   "version": "3.0.0",
   "private": true,
   "description": "Public workspace for building and maintaining free MingCute icon packages.",
+  "keywords": [
+    "svg-icons",
+    "vector-icons",
+    "icon-library"
+  ],
   "license": "Apache-2.0",
   "author": "MingCute Design",
   "homepage": "https://www.mingcute.com/",
