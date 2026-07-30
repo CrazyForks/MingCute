@@ -1,0 +1,56 @@
+{
+  "name": "@mingcute/core",
+  "version": "3.0.0",
+  "description": "Internal icon, style, and adapter contracts for Mingcute builds.",
+  "license": "Apache-2.0",
+  "author": "MingCute Design",
+  "homepage": "https://www.mingcute.com/",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mingcute-design/mingcute-icons.git",
+    "directory": "packages/core"
+  },
+  "bugs": {
+    "url": "https://github.com/mingcute-design/mingcute-icons/issues"
+  },
+  "private": true,
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./styles": {
+      "types": "./dist/styles/index.d.ts",
+      "import": "./dist/styles/index.js"
+    },
+    "./icons": {
+      "types": "./dist/icons/index.d.ts",
+      "import": "./dist/icons/index.js"
+    },
+    "./adapters": {
+      "types": "./dist/adapters/index.d.ts",
+      "import": "./dist/adapters/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.typecheck.json",
+    "test": "pnpm run build && node --test tests/*.test.mjs",
+    "check": "pnpm run typecheck && pnpm run test",
+    "clean": "rm -rf dist"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "typescript": "^5.7.2"
+  },
+  "sideEffects": false,
+  "keywords": []
+}

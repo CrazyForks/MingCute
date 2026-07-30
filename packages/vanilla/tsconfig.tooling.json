@@ -1,0 +1,9 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "target": "ES2022", "module": "NodeNext", "moduleResolution": "NodeNext",
+    "lib": ["ES2022"], "types": ["node"], "rootDir": "src/tooling",
+    "outDir": ".tooling", "declaration": true, "sourceMap": false
+  },
+  "include": ["src/tooling/**/*.ts"]
+}

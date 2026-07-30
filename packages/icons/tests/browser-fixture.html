@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>MingCute shared icon browser fixture</title>
+    <style>
+      :root { color-scheme: light; font-family: Inter, ui-sans-serif, system-ui, sans-serif; }
+      * { box-sizing: border-box; }
+      body { margin: 0; background: #f6f7f9; color: #18202d; }
+      main { width: min(1120px, calc(100% - 32px)); margin: 32px auto; }
+      h1 { margin: 0 0 8px; font-size: 24px; letter-spacing: 0; }
+      #status { margin: 0 0 24px; color: #526071; }
+      #matrix { display: grid; gap: 12px; }
+      section {
+        display: grid;
+        grid-template-columns: minmax(140px, 1fr) repeat(2, 88px);
+        align-items: center;
+        min-height: 96px;
+        padding: 12px 18px;
+        border: 1px solid #d9dee7;
+        border-radius: 6px;
+        background: #fff;
+      }
+      h2 { margin: 0; font-size: 15px; letter-spacing: 0; }
+      figure { display: grid; place-items: center; gap: 5px; margin: 0; }
+      svg { width: 48px; height: 48px; color: #7c3aed; }
+      figcaption { font-size: 11px; color: #687386; }
+      @media (max-width: 520px) {
+        main { width: min(100% - 20px, 1120px); margin-block: 20px; }
+        section { grid-template-columns: 1fr repeat(2, 68px); padding-inline: 12px; }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>MingCute browser render matrix</h1>
+      <p id="status">Rendering shared icon definitions...</p>
+      <div id="matrix"></div>
+    </main>
+    <script type="module">
+      import { renderIconSource } from '../dist/index.js';
+
+      const styles = ['core-regular', 'core-filled'];
+      const icons = ['sparkles', 'loading-2'];
+      const matrix = document.querySelector('#matrix');
+      const failures = [];
+
+      for (const style of styles) {
+        const section = document.createElement('section');
+        section.innerHTML = `<h2>${style}</h2>`;
+        for (const icon of icons) {
+          const { default: definition } = await import(`../dist/styles/${style}/${icon}.js`);
+          const figure = document.createElement('figure');
+          figure.innerHTML = `${renderIconSource(definition)}<figcaption>${icon}</figcaption>`;
+          section.append(figure);
+          matrix.append(section);
+          const svg = figure.querySelector('svg');
+          if (!svg || svg.getBBox().width === 0 || svg.getBBox().height === 0) failures.push(`${style}/${icon}`);
+        }
+      }
+
+      const result = { rendered: styles.length * icons.length, failures };
+      window.__MINGCUTE_BROWSER_RESULT__ = result;
+      const status = document.querySelector('#status');
+      status.textContent = failures.length
+        ? `Failed: ${failures.join(', ')}`
+        : `${result.rendered} icons rendered with non-empty browser geometry.`;
+      status.dataset.result = failures.length ? 'failed' : 'passed';
+    </script>
+  </body>
+</html>

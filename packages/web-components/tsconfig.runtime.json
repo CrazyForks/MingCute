@@ -1,0 +1,5 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": { "target": "ES2022", "module": "NodeNext", "moduleResolution": "NodeNext", "lib": ["ES2022", "DOM"], "rootDir": "src/runtime", "outDir": "dist/runtime", "declaration": true, "sourceMap": false },
+  "include": ["src/runtime/**/*.ts"]
+}

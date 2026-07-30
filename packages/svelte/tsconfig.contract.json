@@ -1,0 +1,8 @@
+{
+  "extends": "./tsconfig.tooling.json",
+  "compilerOptions": {
+    "noEmit": true,
+    "rootDir": "."
+  },
+  "include": ["tests/contract.type-test.ts"]
+}

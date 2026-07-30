@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Mingcute SVG adapter render fixtures</title>
+<style>
+  :root { color-scheme: light; }
+  body { font: 14px/1.45 system-ui, sans-serif; margin: 24px; color: #182230; background: #f5f7fa; }
+  h1 { margin: 0 0 6px; }
+  h2 { margin: 30px 0 12px; }
+  p { margin: 0 0 20px; color: #526173; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(390px, 1fr)); gap: 16px; }
+  .pair { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding: 12px; border: 1px solid #ccd5e0; border-radius: 10px; background: white; }
+  figure { min-width: 0; margin: 0; }
+  img { display: block; width: 150px; height: 150px; max-width: 100%; margin: 0 auto 8px; background: repeating-conic-gradient(#eef2f6 0 25%, white 0 50%) 50% / 20px 20px; }
+  figcaption { overflow-wrap: anywhere; text-align: center; font-size: 12px; }
+  .label { display: block; color: #748196; }
+  .name { font-weight: 650; }
+</style>
+<h1>Canonical source → generated SVG</h1>
+<p>Complete comparison set for compiler resource-backed SVGs. Each card shows the canonical source on the left and adapter output on the right.</p>
+<h2>Angular gradients (6)</h2>
+<div class="grid" data-section="angular">
+  <article class="pair" data-resource="angular" data-icon="core-filled/system/loading">
+    <figure><img loading="lazy" src="../../../assets/svg/core/filled/system/loading.svg"><figcaption><span class="label">Canonical</span><span class="name">core-filled/system/loading</span></figcaption></figure>
+    <figure><img loading="lazy" src="../core-filled/loading.svg"><figcaption><span class="label">Generated</span><span class="name">core-filled/system/loading</span></figcaption></figure>
+  </article>
+  <article class="pair" data-resource="angular" data-icon="core-filled/system/loading_2">
+    <figure><img loading="lazy" src="../../../assets/svg/core/filled/system/loading_2.svg"><figcaption><span class="label">Canonical</span><span class="name">core-filled/system/loading_2</span></figcaption></figure>
+    <figure><img loading="lazy" src="../core-filled/loading-2.svg"><figcaption><span class="label">Generated</span><span class="name">core-filled/system/loading_2</span></figcaption></figure>
+  </article>
+  <article class="pair" data-resource="angular" data-icon="core-filled/system/loading_4">
+    <figure><img loading="lazy" src="../../../assets/svg/core/filled/system/loading_4.svg"><figcaption><span class="label">Canonical</span><span class="name">core-filled/system/loading_4</span></figcaption></figure>
+    <figure><img loading="lazy" src="../core-filled/loading-4.svg"><figcaption><span class="label">Generated</span><span class="name">core-filled/system/loading_4</span></figcaption></figure>
+  </article>
+  <article class="pair" data-resource="angular" data-icon="core-regular/system/loading">
+    <figure><img loading="lazy" src="../../../assets/svg/core/regular/system/loading.svg"><figcaption><span class="label">Canonical</span><span class="name">core-regular/system/loading</span></figcaption></figure>
+    <figure><img loading="lazy" src="../core-regular/loading.svg"><figcaption><span class="label">Generated</span><span class="name">core-regular/system/loading</span></figcaption></figure>
+  </article>
+  <article class="pair" data-resource="angular" data-icon="core-regular/system/loading_2">
+    <figure><img loading="lazy" src="../../../assets/svg/core/regular/system/loading_2.svg"><figcaption><span class="label">Canonical</span><span class="name">core-regular/system/loading_2</span></figcaption></figure>
+    <figure><img loading="lazy" src="../core-regular/loading-2.svg"><figcaption><span class="label">Generated</span><span class="name">core-regular/system/loading_2</span></figcaption></figure>
+  </article>
+  <article class="pair" data-resource="angular" data-icon="core-regular/system/loading_4">
+    <figure><img loading="lazy" src="../../../assets/svg/core/regular/system/loading_4.svg"><figcaption><span class="label">Canonical</span><span class="name">core-regular/system/loading_4</span></figcaption></figure>
+    <figure><img loading="lazy" src="../core-regular/loading-4.svg"><figcaption><span class="label">Generated</span><span class="name">core-regular/system/loading_4</span></figcaption></figure>
+  </article>
+</div>
+<h2>Masks (0)</h2>
+<div class="grid" data-section="mask">
+
+</div>
+<h2>Embedded-image patterns (0)</h2>
+<div class="grid" data-section="pattern">
+
+</div>
+<h2>Native gradient reference (0)</h2>
+<div class="grid" data-section="native-gradient">
+
+</div>
+</html>
