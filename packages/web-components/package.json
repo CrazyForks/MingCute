@@ -1,0 +1,79 @@
+{
+  "name": "@mingcute/web-components",
+  "version": "3.0.0",
+  "description": "Mingcute SVG icon custom elements.",
+  "keywords": [
+    "icons",
+    "svg",
+    "web-components",
+    "custom-elements",
+    "mingcute"
+  ],
+  "license": "Apache-2.0",
+  "author": "MingCute Design",
+  "homepage": "https://www.mingcute.com/",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mingcute-design/mingcute-icons.git",
+    "directory": "packages/web-components"
+  },
+  "bugs": {
+    "url": "https://github.com/mingcute-design/mingcute-icons/issues"
+  },
+  "private": false,
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./core-regular": {
+      "types": "./dist/styles/core-regular.d.ts",
+      "import": "./dist/styles/core-regular.js"
+    },
+    "./core-regular/*": {
+      "types": "./dist/styles/core-regular/*.d.ts",
+      "import": "./dist/styles/core-regular/*.js"
+    },
+    "./core-filled": {
+      "types": "./dist/styles/core-filled.d.ts",
+      "import": "./dist/styles/core-filled.js"
+    },
+    "./core-filled/*": {
+      "types": "./dist/styles/core-filled/*.d.ts",
+      "import": "./dist/styles/core-filled/*.js"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build:tooling": "tsc -p tsconfig.tooling.json",
+    "build:runtime": "tsc -p tsconfig.runtime.json",
+    "build": "pnpm run clean && pnpm run build:tooling && pnpm run build:runtime && node scripts/build-package.mjs",
+    "typecheck": "tsc -p tsconfig.typecheck.json",
+    "test": "pnpm run build && node --test --test-concurrency=1 tests/*.test.mjs",
+    "audit:pack": "node scripts/audit-pack.mjs",
+    "check": "pnpm run typecheck && pnpm run test && pnpm run audit:pack",
+    "clean": "node ../../scripts/clean-package.mjs dist .tooling"
+  },
+  "dependencies": {
+    "@mingcute/icons": "workspace:*"
+  },
+  "devDependencies": {
+    "@mingcute/compiler": "workspace:*",
+    "@mingcute/core": "workspace:*",
+    "@types/node": "^22.10.0",
+    "esbuild": "^0.25.0",
+    "jsdom": "^29.1.1",
+    "typescript": "^5.7.2"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "sideEffects": false
+}
