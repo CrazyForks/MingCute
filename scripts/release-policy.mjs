@@ -45,7 +45,9 @@ export function validateRelease(policy, packages) {
     if (manifest.version !== policy.version) errors.push(`${manifest.name} must use version ${policy.version}`);
     if (manifest.license !== 'Apache-2.0') errors.push(`${manifest.name} must use Apache-2.0`);
     if (manifest.publishConfig?.access !== 'public') errors.push(`${manifest.name} must use public npm access`);
-    if (manifest.publishConfig?.registry) errors.push(`${manifest.name} must not override the public npm registry`);
+    if (manifest.publishConfig?.registry !== 'https://registry.npmjs.org/') {
+      errors.push(`${manifest.name} must publish explicitly to the public npm registry`);
+    }
     if (manifest.homepage !== WEBSITE) errors.push(`${manifest.name} homepage must be ${WEBSITE}`);
     if (manifest.repository?.url !== REPOSITORY) errors.push(`${manifest.name} must point to the public repository`);
     if (manifest.bugs?.url !== ISSUES) errors.push(`${manifest.name} issues must point to the public repository`);

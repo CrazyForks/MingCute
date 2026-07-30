@@ -12,6 +12,9 @@ test('the free release contains exactly ten public Apache packages', async () =>
   const release = validateRelease(policy, packages);
   assert.equal(release.length, 10);
   assert.equal(new Set(release.map(({ version }) => version)).size, 1);
+  assert.equal(packages.every(({ manifest }) =>
+    manifest.publishConfig?.registry === 'https://registry.npmjs.org/' &&
+    manifest.publishConfig?.access === 'public'), true);
 });
 
 test('internal build packages cannot be published', async () => {
