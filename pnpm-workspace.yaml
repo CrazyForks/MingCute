@@ -1,2 +1,6 @@
 packages:
-  - 'packages/*'
+  - "packages/*"
+
+allowBuilds:
+  esbuild: true
+  ttf2woff2: true
