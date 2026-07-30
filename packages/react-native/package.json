@@ -4,6 +4,9 @@
   "description": "Mingcute icon components for React Native.",
   "keywords": [
     "icons",
+    "svg-icons",
+    "vector-icons",
+    "icon-library",
     "react-native",
     "react-native-svg",
     "mingcute"

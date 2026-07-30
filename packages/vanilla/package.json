@@ -4,6 +4,9 @@
   "description": "Mingcute SVG strings and DOM helpers for vanilla JavaScript.",
   "keywords": [
     "icons",
+    "svg-icons",
+    "vector-icons",
+    "icon-library",
     "svg",
     "vanilla",
     "dom",

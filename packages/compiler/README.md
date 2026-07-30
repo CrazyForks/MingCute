@@ -4,60 +4,160 @@
 
 <h1 align="center">@mingcute/compiler</h1>
 
-<h3 align="center">Private SVG compiler for the public Mingcute catalogue</h3>
+<h3 align="center">Private SVG compilation and validation for Mingcute packages</h3>
 
 <p align="center">
   <a href="https://www.mingcute.com/"><img src="https://img.shields.io/badge/mingcute.com-website-007AFF" alt="Mingcute website" /></a>&nbsp;
   <img src="https://img.shields.io/badge/workspace-private-007AFF" alt="Private workspace package" />&nbsp;
-  <a href="https://bundlephobia.com/package/@mingcute/icons"><img src="https://img.shields.io/bundlephobia/minzip/@mingcute/icons?color=007AFF&label=gzip" alt="Mingcute Icons minified and gzipped size" /></a>&nbsp;
-  <a href="https://www.npmjs.com/package/@mingcute/icons"><img src="https://img.shields.io/npm/dm/@mingcute/icons?color=23AF5F&label=downloads" alt="Mingcute Icons monthly npm downloads" /></a>&nbsp;
-  <a href="https://github.com/mingcute-design/mingcute-icons/stargazers"><img src="https://img.shields.io/github/stars/mingcute-design/mingcute-icons?color=007AFF&style=flat" alt="Mingcute GitHub stars" /></a>&nbsp;
-  <a href="https://x.com/MingCute_icon"><img src="https://img.shields.io/twitter/follow/MingCute_icon?style=social" alt="Follow Mingcute on X" /></a>
+  <a href="https://github.com/mingcute-design/mingcute-icons/stargazers"><img src="https://img.shields.io/github/stars/mingcute-design/mingcute-icons?color=007AFF&style=flat" alt="Mingcute GitHub stars" /></a>
 </p>
 
 ---
 
 ## Overview
 
-`@mingcute/compiler` is the framework-neutral build pipeline that converts canonical SVG files into the shared `IconDefinition` model from `@mingcute/core`.
+`@mingcute/compiler` is the private, framework-neutral build pipeline that converts canonical Mingcute SVG artwork into the shared `IconDefinition` model.
+
+It is used only during repository builds. Consumer packages have no runtime dependency on it.
+
+## Responsibilities
+
+The compiler owns:
+
+- source discovery;
+- secure XML parsing;
+- SVG optimization;
+- geometry normalization;
+- paint and resource normalization;
+- definition validation;
+- source auditing; and
+- framework-neutral compiled output.
+
+Framework-specific code generation belongs to each consumer package adapter.
 
 ## Pipeline
 
 ```text
 source discovery
-  -> secure XML parsing
-  -> SVG optimization
-  -> geometry and resource normalization
-  -> definition validation
-  -> package-specific generation
+  → secure XML parsing
+  → SVG optimization
+  → geometry and resource normalization
+  → definition validation
+  → package-specific generation
 ```
 
-The compiler preserves gradients, masks, clip paths, and self-contained image patterns while rejecting scripts, event handlers, external resources, malformed XML, and unsupported active content.
+The compiler preserves supported artwork while rejecting unsafe or unsupported input before package generation begins.
 
-It does not generate React, Vue, or other framework code. Each consumer package owns its adapter and output generator.
+## Security Boundary
 
-<a href="https://www.mingcute.com/">
-  <img src="https://raw.githubusercontent.com/mingcute-design/mingcute-icons/main/images/banner2.png" alt="Mingcute icons in product interfaces" width="100%" />
-</a>
+The compiler rejects:
+
+- scripts;
+- inline event handlers;
+- external resource URLs;
+- malformed XML;
+- unsupported active content;
+- unsafe image references; and
+- invalid resource relationships.
+
+Supported self-contained resources, including gradients, masks, clipping paths, and embedded image patterns, remain structured in the compiled definition.
+
+Security failures stop the build rather than silently removing or retaining unsafe content.
 
 ## Publication Boundary
 
-This package is marked private, has no publication configuration, and is used only during repository builds. Generated consumer packages have no runtime dependency on it.
+The package is marked private and has no public publication configuration.
+
+It must remain absent from:
+
+- published package manifests;
+- consumer runtime dependency graphs;
+- public export maps; and
+- packed application dependencies.
+
+Generated consumer output must be self-contained or depend on `@mingcute/icons`.
+
+## Determinism
+
+Compilation must produce equivalent output for identical source files and configuration.
+
+Maintainers should avoid:
+
+- locale-sensitive ordering;
+- filesystem enumeration assumptions;
+- platform-specific path behavior;
+- unstable generated IDs; and
+- ad hoc source-string replacement.
+
+XML must be parsed structurally.
 
 ## Maintainer Contract
 
-- Compilation must be deterministic for identical source files and configuration.
-- XML is parsed structurally; source must never be transformed with ad hoc string replacement.
-- Unsupported active content and external resources fail the build rather than being silently retained.
-- Resource IDs and references must remain internally consistent after optimization.
-- Framework code generation belongs to adapters, not this compiler.
+- Keep framework behavior out of the compiler.
+- Preserve internal resource references after optimization.
+- Fail explicitly on unsupported artwork.
+- Keep source counts and generated counts auditable.
+- Fix canonical parsing or normalization problems at this layer.
+- Fix framework-only rendering problems in the owning adapter.
+- Add focused fixtures for every new supported SVG feature.
+- Run repository-wide generation and visual checks after compiler changes.
+
+## Artwork Fidelity
+
+The compiler supports structured SVG features required by the Mingcute catalogue, including:
+
+- paths and basic geometry;
+- groups and transforms;
+- inherited fills and strokes;
+- linear and radial gradients;
+- masks;
+- clipping paths;
+- patterns;
+- self-contained embedded images; and
+- scoped resource references.
+
+Optimizer changes must be validated against parsed definitions and rendering fixtures.
+
+## Asset Auditing
+
+Run the asset audit when source counts, names, or style membership change:
+
+```bash
+pnpm --filter @mingcute/compiler audit:assets
+```
+
+Resolve:
+
+- missing assets;
+- duplicate canonical names;
+- unexpected files;
+- invalid style placement;
+- inconsistent metadata; and
+- unsupported source content
+
+before package generation.
 
 ## Troubleshooting
 
-- **An SVG fails security validation:** remove scripts, event attributes, external URLs, or unsupported active content from the canonical source.
-- **Artwork changes after optimization:** compare the parsed definition and render fixture before changing optimizer settings.
-- **Asset counts differ:** run `audit:assets` and resolve missing, duplicate, or unexpected source files before generation.
-- **A framework output is wrong but the definition is correct:** fix the owning package adapter instead of adding framework behavior to the compiler.
+### An SVG fails security validation
+
+Remove scripts, event attributes, external URLs, or unsupported active content from the canonical source.
+
+### Artwork changes after optimization
+
+Compare the parsed definition and rendering fixture before changing optimizer settings. Confirm that resource references and transforms remain intact.
+
+### Asset counts differ
+
+Run `audit:assets` and resolve missing, duplicate, misplaced, or unexpected source files.
+
+### A framework output is wrong but the definition is correct
+
+Fix the owning framework adapter. Do not introduce framework-specific behavior into the compiler.
+
+### Output differs across operating systems
+
+Check path normalization, sorting, locale-sensitive operations, and filesystem-order assumptions.
 
 ## Development
 
@@ -68,11 +168,20 @@ pnpm --filter @mingcute/compiler test
 pnpm --filter @mingcute/compiler audit:assets
 ```
 
+Compiler changes should also pass repository-wide validation:
+
+```bash
+pnpm build
+pnpm check
+pnpm release:check
+pnpm pack:dry
+```
+
 <img src="https://raw.githubusercontent.com/mingcute-design/mingcute-icons/main/images/banner3.png" alt="Editable Mingcute vector construction" width="100%" />
 
 ## License
 
-This private workspace package is covered by Apache-2.0 and is not published independently.
+This private workspace package is covered by the [Apache License 2.0](../../LICENSE) and is not published independently.
 
 ## Links
 
