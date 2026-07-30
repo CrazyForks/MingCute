@@ -4,40 +4,44 @@
 
 <h1 align="center">@mingcute/react</h1>
 
-<h3 align="center">Carefully crafted Mingcute icon components for React</h3>
+<h3 align="center">Typed, tree-shakeable Mingcute icons for React</h3>
 
 <p align="center">
   <a href="https://www.mingcute.com/"><img src="https://img.shields.io/badge/mingcute.com-website-007AFF" alt="Mingcute website" /></a>&nbsp;
-  <a href="https://www.npmjs.com/package/@mingcute/react"><img src="https://img.shields.io/npm/v/@mingcute/react?color=007AFF&label=version" alt="@mingcute/react npm version" /></a>&nbsp;
+  <a href="https://www.npmjs.com/package/@mingcute/react"><img src="https://img.shields.io/npm/v/%40mingcute%2Freact?color=007AFF&label=version" alt="@mingcute/react npm version" /></a>&nbsp;
   <a href="https://bundlephobia.com/package/@mingcute/react"><img src="https://img.shields.io/bundlephobia/minzip/@mingcute/react?color=007AFF&label=gzip" alt="@mingcute/react minified and gzipped size" /></a>&nbsp;
-  <a href="https://www.npmjs.com/package/@mingcute/react"><img src="https://img.shields.io/npm/dm/@mingcute/react?color=23AF5F&label=downloads" alt="@mingcute/react monthly npm downloads" /></a>&nbsp;
-  <a href="https://github.com/mingcute-design/mingcute-icons/stargazers"><img src="https://img.shields.io/github/stars/mingcute-design/mingcute-icons?color=007AFF&style=flat" alt="Mingcute GitHub stars" /></a>&nbsp;
-  <a href="https://x.com/MingCute_icon"><img src="https://img.shields.io/twitter/follow/MingCute_icon?style=social" alt="Follow Mingcute on X" /></a>
+  <a href="https://www.npmjs.com/package/@mingcute/react"><img src="https://img.shields.io/npm/dm/%40mingcute%2Freact?color=23AF5F&label=downloads" alt="@mingcute/react monthly npm downloads" /></a>&nbsp;
+  <a href="https://github.com/mingcute-design/mingcute-icons/stargazers"><img src="https://img.shields.io/github/stars/mingcute-design/mingcute-icons?color=007AFF&style=flat" alt="Mingcute GitHub stars" /></a>
 </p>
 
 ---
 
 ## Overview
 
-`@mingcute/react` renders Core Regular and Filled as typed React components. Geometry comes from `@mingcute/icons`, so the adapter remains focused on rendering, accessibility, prop precedence, refs, and framework lifecycle behavior.
+`@mingcute/react` provides typed React components for the public Mingcute Core Regular and Core Filled styles.
 
-## Why Use This Adapter?
+Canonical icon geometry comes from `@mingcute/icons`. The adapter focuses on React rendering, accessibility, prop precedence, refs, framework lifecycle behavior, and stable SVG resource identifiers.
 
-- Idiomatic React components with strict TypeScript types.
-- Style and direct-icon subpaths designed for tree shaking.
-- Decorative accessibility defaults with caller-controlled labels and roles.
-- Instance-scoped SVG resources for repeated icons and SSR.
-- No duplicated definition catalogue inside the adapter.
+## Highlights
+
+- **3,326 styled definitions:** 1,663 icons in Core Regular and Core Filled.
+- **Typed React components:** generated declarations and framework-native props.
+- **Tree-shakeable imports:** style entry points and direct icon subpaths.
+- **Accessible defaults:** unlabeled icons remain decorative.
+- **Scoped SVG resources:** repeated icons avoid gradient, mask, and clip-path collisions.
+- **Shared geometry:** the adapter does not duplicate the icon catalogue.
 
 <a href="https://www.mingcute.com/">
-  <img src="https://raw.githubusercontent.com/mingcute-design/mingcute-icons/main/images/banner2.png" alt="Mingcute icons in product interfaces" width="100%" />
+  <img src="https://raw.githubusercontent.com/mingcute-design/mingcute-icons/main/images/banner2.png" alt="Mingcute icons used in product interfaces" width="100%" />
 </a>
 
 ## Installation
 
+**Compatibility:** React 18 or 19.
+
 ```bash
 # npm
-npm i @mingcute/react
+npm install @mingcute/react
 
 # pnpm
 pnpm add @mingcute/react
@@ -48,8 +52,6 @@ yarn add @mingcute/react
 # Bun
 bun add @mingcute/react
 ```
-
-**Compatibility:** React 18 or 19.
 
 ## Quick Start
 
@@ -63,65 +65,109 @@ export function NavigationIcon() {
 
 ## Imports
 
-```ts
-// Convenient style barrel
-import { Home1Regular, Search2Regular } from '@mingcute/react/core-regular';
+### Style entry points
 
-// Smallest direct module
+```ts
+import {
+  Home1Regular,
+  Search2Regular,
+} from '@mingcute/react/core-regular';
+```
+
+### Direct icon imports
+
+```ts
 import Home1Regular from '@mingcute/react/core-regular/home-1';
 ```
 
-The package root exports the shared `Icon` utility and public types only. It does not export every icon.
+The package root exports the shared `Icon` utility and public types. It does not re-export the complete icon catalogue.
 
 ## API Reference
 
 | Prop | Type | Default | Purpose |
 |---|---|---|---|
-| `size` | `number \| string` | `24` | Sets width and height unless either is overridden |
-| `width`, `height` | React SVG values | `size` | Override one dimension |
-| `color` | `string` | `currentColor` | Sets the inherited SVG paint color |
+| `size` | `number \| string` | `24` | Sets both width and height unless either is provided |
+| `width` | React SVG value | `size` | Overrides the rendered width |
+| `height` | React SVG value | `size` | Overrides the rendered height |
+| `color` | `string` | `currentColor` | Sets inherited SVG paint |
 | `title` | `string` | none | Adds an accessible `<title>` |
-| `titleId` | `string` | generated | Overrides the title association ID |
+| `titleId` | `string` | generated | Overrides the generated title association ID |
 | `ref` | `Ref<SVGSVGElement>` | none | Accesses the rendered SVG element |
-| Other props | `SVGProps<SVGSVGElement>` | none | Forwards SVG attributes, events, classes, styles, and ARIA |
+| Other props | `SVGProps<SVGSVGElement>` | none | Forwards SVG, event, class, style, and ARIA props |
 
-Each generated component uses `React.forwardRef` and scopes gradient, mask, clip-path, and pattern IDs with `useId`, including SSR-safe hydration behavior.
+Explicit `width` or `height` values take precedence over `size`.
 
 ## Accessibility
 
-Icons without a title or explicit accessible name are hidden from assistive technology. Supplying `title`, `aria-label`, or `aria-labelledby` exposes the icon with image semantics unless the caller overrides them. Keep icons decorative when adjacent text already provides the label.
+Icons without a title or explicit accessible name are hidden from assistive technology.
 
-```tsx
-<button type="button">
-  <Home1Regular aria-hidden />
-  Home
-</button>
-```
+### Meaningful icons
 
-## Production Guidance
+Provide a title or platform-appropriate accessibility label when an icon communicates meaning by itself.
 
-- The package is ESM-only, side-effect free, and compatible with React 18 and 19.
-- Prefer direct icon subpaths in libraries and bundle-sensitive entry points.
-- Preserve React's `useId()` output during server rendering; do not rewrite generated resource IDs.
-- Style with `color`, `className`, or `style`. Explicit `width` and `height` take precedence over `size`.
+### Decorative icons
 
-## Troubleshooting
+Keep icons decorative when nearby text already labels the action.
 
-- **Import not found:** use the kebab-case direct path (`regular/home-1`) or the PascalCase named export (`Home1Regular`).
-- **Hydration warning:** confirm the server and client use the same React tree and package version.
-- **Icon has the wrong color:** check for a more specific CSS rule on the SVG or its paths; most themeable geometry uses `currentColor`.
-- **Bundle is unexpectedly large:** replace a style barrel or namespace import with the direct icon subpath.
+### Icon-only controls
+
+Put the accessible name on the interactive control and keep the icon itself decorative.
+
+## Server Rendering
+
+Components use `React.useId()` to scope titles, gradients, masks, clip paths, and patterns.
+
+For reliable hydration, render the same component tree with the same package version on the server and client. Do not rewrite generated resource IDs.
 
 ## Available Styles
 
-| Import subpath | Source style | Icons |
+| Import subpath | Style | Icons |
 |---|---|---:|
 | `core-regular` | Core Regular | 1,663 |
 | `core-filled` | Core Filled | 1,663 |
+| **Total** | **All public styles** | **3,326** |
+
+Additional Core, Cute, and Sharp styles are available in Mingcute Pro.
+
+## Production Guidance
+
+- The package is ESM-only and side-effect free.
+- Prefer direct icon subpaths in shared libraries and bundle-sensitive entry points.
+- Keep framework and Mingcute package versions aligned across server and client environments where applicable.
+- Use framework components or standalone SVG when gradients, masks, patterns, or original colors must be preserved exactly.
+- Style icons with `color`, `className`, or `style`.
 
 ## Integration with Definitions
 
-The adapter consumes canonical geometry from `@mingcute/icons`. That package owns icon names, paths, layers, and metadata; `@mingcute/react` owns React rendering and accessibility behavior. Keeping those responsibilities separate prevents duplicate icon data and keeps every framework adapter visually consistent.
+`@mingcute/icons` owns icon names, normalized geometry, SVG resources, layers, and metadata.
+
+`@mingcute/react` owns:
+
+- React component rendering;
+- prop and attribute handling;
+- accessibility behavior;
+- resource ID scoping; and
+- framework-specific refs and lifecycle behavior.
+
+This separation prevents duplicate icon data and keeps every framework adapter visually consistent.
+
+## Troubleshooting
+
+### A component import cannot be resolved
+
+Use a PascalCase named export from a style entry point or the kebab-case direct icon path.
+
+### The production bundle is larger than expected
+
+Use direct icon subpaths and confirm that the bundler tree-shakes ESM. Avoid namespace imports of complete style entry points.
+
+### A hydration warning appears
+
+Confirm that the server and client render the same icon tree with the same React and Mingcute package versions.
+
+### An icon has the wrong color
+
+Check for a more specific CSS rule on the SVG or its child paths. Most themeable geometry uses `currentColor`.
 
 ## Development
 
@@ -135,7 +181,7 @@ pnpm --filter @mingcute/react check
 
 ## License
 
-Licensed under Apache-2.0.
+Licensed under the [Apache License 2.0](../../LICENSE).
 
 ## Links
 

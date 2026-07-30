@@ -4,40 +4,44 @@
 
 <h1 align="center">@mingcute/svelte</h1>
 
-<h3 align="center">Carefully crafted Mingcute icon components for Svelte</h3>
+<h3 align="center">Typed, tree-shakeable Mingcute icons for Svelte</h3>
 
 <p align="center">
   <a href="https://www.mingcute.com/"><img src="https://img.shields.io/badge/mingcute.com-website-007AFF" alt="Mingcute website" /></a>&nbsp;
-  <a href="https://www.npmjs.com/package/@mingcute/svelte"><img src="https://img.shields.io/npm/v/@mingcute/svelte?color=007AFF&label=version" alt="@mingcute/svelte npm version" /></a>&nbsp;
+  <a href="https://www.npmjs.com/package/@mingcute/svelte"><img src="https://img.shields.io/npm/v/%40mingcute%2Fsvelte?color=007AFF&label=version" alt="@mingcute/svelte npm version" /></a>&nbsp;
   <a href="https://bundlephobia.com/package/@mingcute/svelte"><img src="https://img.shields.io/bundlephobia/minzip/@mingcute/svelte?color=007AFF&label=gzip" alt="@mingcute/svelte minified and gzipped size" /></a>&nbsp;
-  <a href="https://www.npmjs.com/package/@mingcute/svelte"><img src="https://img.shields.io/npm/dm/@mingcute/svelte?color=23AF5F&label=downloads" alt="@mingcute/svelte monthly npm downloads" /></a>&nbsp;
-  <a href="https://github.com/mingcute-design/mingcute-icons/stargazers"><img src="https://img.shields.io/github/stars/mingcute-design/mingcute-icons?color=007AFF&style=flat" alt="Mingcute GitHub stars" /></a>&nbsp;
-  <a href="https://x.com/MingCute_icon"><img src="https://img.shields.io/twitter/follow/MingCute_icon?style=social" alt="Follow Mingcute on X" /></a>
+  <a href="https://www.npmjs.com/package/@mingcute/svelte"><img src="https://img.shields.io/npm/dm/%40mingcute%2Fsvelte?color=23AF5F&label=downloads" alt="@mingcute/svelte monthly npm downloads" /></a>&nbsp;
+  <a href="https://github.com/mingcute-design/mingcute-icons/stargazers"><img src="https://img.shields.io/github/stars/mingcute-design/mingcute-icons?color=007AFF&style=flat" alt="Mingcute GitHub stars" /></a>
 </p>
 
 ---
 
 ## Overview
 
-`@mingcute/svelte` renders Core Regular and Filled as typed Svelte components. Geometry comes from `@mingcute/icons`, so the adapter remains focused on rendering, accessibility, prop precedence, refs, and framework lifecycle behavior.
+`@mingcute/svelte` provides typed Svelte components for the public Mingcute Core Regular and Core Filled styles.
 
-## Why Use This Adapter?
+Canonical icon geometry comes from `@mingcute/icons`. The adapter focuses on Svelte rendering, accessibility, prop precedence, refs, framework lifecycle behavior, and stable SVG resource identifiers.
 
-- Idiomatic Svelte components with strict TypeScript types.
-- Style and direct-icon subpaths designed for tree shaking.
-- Decorative accessibility defaults with caller-controlled labels and roles.
-- Instance-scoped SVG resources for repeated icons and SSR.
-- No duplicated definition catalogue inside the adapter.
+## Highlights
+
+- **3,326 styled definitions:** 1,663 icons in Core Regular and Core Filled.
+- **Typed Svelte components:** generated declarations and framework-native props.
+- **Tree-shakeable imports:** style entry points and direct icon subpaths.
+- **Accessible defaults:** unlabeled icons remain decorative.
+- **Scoped SVG resources:** repeated icons avoid gradient, mask, and clip-path collisions.
+- **Shared geometry:** the adapter does not duplicate the icon catalogue.
 
 <a href="https://www.mingcute.com/">
-  <img src="https://raw.githubusercontent.com/mingcute-design/mingcute-icons/main/images/banner2.png" alt="Mingcute icons in product interfaces" width="100%" />
+  <img src="https://raw.githubusercontent.com/mingcute-design/mingcute-icons/main/images/banner2.png" alt="Mingcute icons used in product interfaces" width="100%" />
 </a>
 
 ## Installation
 
+**Compatibility:** Svelte 5.20 or newer.
+
 ```bash
 # npm
-npm i @mingcute/svelte
+npm install @mingcute/svelte
 
 # pnpm
 pnpm add @mingcute/svelte
@@ -49,73 +53,122 @@ yarn add @mingcute/svelte
 bun add @mingcute/svelte
 ```
 
-**Compatibility:** Svelte 5.20 or newer.
-
 ## Quick Start
 
 ```svelte
-<script>
+<script lang="ts">
   import { Home1Regular } from '@mingcute/svelte/core-regular';
 </script>
 
-<Home1Regular size={24} title="Home" bind:ref />
+<Home1Regular size={24} title="Home" />
 ```
 
 ## Imports
 
-```ts
-// Convenient style barrel
-import { Home1Regular, Search2Regular } from '@mingcute/svelte/core-regular';
+### Style entry points
 
-// Smallest direct module
+```ts
+import {
+  Home1Regular,
+  Search2Regular,
+} from '@mingcute/svelte/core-regular';
+```
+
+### Direct icon imports
+
+```ts
 import Home1Regular from '@mingcute/svelte/core-regular/home-1';
 ```
 
-The package root exports the shared `Icon` utility and public types only. It does not export every icon.
+The package root exports the shared `Icon` utility and public types. It does not re-export the complete icon catalogue.
 
 ## API Reference
 
 | Prop | Type | Default | Purpose |
 |---|---|---|---|
-| `size` | `number \| string` | `24` | Sets width and height unless either is overridden |
-| `width`, `height` | `number \| string` | `size` | Override one dimension |
-| `color` | `string` | `currentColor` | Sets the inherited SVG paint color |
+| `size` | `number \| string` | `24` | Sets both width and height unless either is provided |
+| `width` | Svelte SVG value | `size` | Overrides the rendered width |
+| `height` | Svelte SVG value | `size` | Overrides the rendered height |
+| `color` | `string` | `currentColor` | Sets inherited SVG paint |
 | `title` | `string` | none | Adds an accessible `<title>` |
 | `titleId` | `string` | generated | Overrides the title association ID |
 | `class`, `className`, `style` | Svelte SVG values | none | Styles the rendered SVG |
 | `ref` | `SVGSVGElement` | none | Supports `bind:ref` |
-| Other props | Svelte SVG attributes | none | Forwards SVG attributes, events, and ARIA |
+| Other props | Svelte SVG attributes | none | Forwards SVG, event, and ARIA props |
 
-The runtime uses `$props.id()` for SSR-safe resource and title IDs. Components require Svelte 5.20 or newer.
+Explicit `width` or `height` values take precedence over `size`.
 
 ## Accessibility
 
-Icons without a title or explicit accessible name are hidden from assistive technology. Supplying `title`, `aria-label`, or `aria-labelledby` exposes the icon with image semantics unless the caller overrides them. Keep icons decorative when adjacent text already provides the label.
+Icons without a title or explicit accessible name are hidden from assistive technology.
 
-## Production Guidance
+### Meaningful icons
 
-- The package is ESM-only, side-effect free, and requires Svelte 5.20 or newer.
-- Prefer direct icon subpaths in libraries and bundle-sensitive routes.
-- Keep server and client package versions aligned so `$props.id()` values hydrate consistently.
-- Use `bind:ref` only when direct SVG access is required.
+Provide a title or platform-appropriate accessibility label when an icon communicates meaning by itself.
 
-## Troubleshooting
+### Decorative icons
 
-- **Component import not found:** use the PascalCase named export or kebab-case direct path.
-- **`$props.id()` or rune errors:** upgrade the consuming project to Svelte 5.20 or newer.
-- **SSR hydration warning:** confirm identical component trees and Mingcute versions on server and client.
-- **Bundle is unexpectedly large:** import from the direct icon subpath.
+Keep icons decorative when nearby text already labels the action.
+
+### Icon-only controls
+
+Put the accessible name on the interactive control and keep the icon itself decorative.
+
+## Server Rendering
+
+Components use `$props.id()` for title and SVG resource identifiers.
+
+Svelte 5.20 or newer is required. Keep server and client package versions aligned for stable hydration.
 
 ## Available Styles
 
-| Import subpath | Source style | Icons |
+| Import subpath | Style | Icons |
 |---|---|---:|
 | `core-regular` | Core Regular | 1,663 |
 | `core-filled` | Core Filled | 1,663 |
+| **Total** | **All public styles** | **3,326** |
+
+Additional Core, Cute, and Sharp styles are available in Mingcute Pro.
+
+## Production Guidance
+
+- The package is ESM-only and side-effect free.
+- Prefer direct icon subpaths in shared libraries and bundle-sensitive entry points.
+- Keep framework and Mingcute package versions aligned across server and client environments where applicable.
+- Use framework components or standalone SVG when gradients, masks, patterns, or original colors must be preserved exactly.
+- Use `bind:ref` only when direct SVG access is required.
 
 ## Integration with Definitions
 
-The adapter consumes canonical geometry from `@mingcute/icons`. That package owns icon names, paths, layers, and metadata; `@mingcute/svelte` owns Svelte rendering and accessibility behavior. Keeping those responsibilities separate prevents duplicate icon data and keeps every framework adapter visually consistent.
+`@mingcute/icons` owns icon names, normalized geometry, SVG resources, layers, and metadata.
+
+`@mingcute/svelte` owns:
+
+- Svelte component rendering;
+- prop and attribute handling;
+- accessibility behavior;
+- resource ID scoping; and
+- framework-specific refs and lifecycle behavior.
+
+This separation prevents duplicate icon data and keeps every framework adapter visually consistent.
+
+## Troubleshooting
+
+### A component import cannot be resolved
+
+Use a PascalCase named export from a style entry point or the kebab-case direct icon path.
+
+### The production bundle is larger than expected
+
+Use direct icon subpaths and confirm that the bundler tree-shakes ESM. Avoid namespace imports of complete style entry points.
+
+### `$props.id()` or rune errors appear
+
+Upgrade the consuming application to Svelte 5.20 or newer.
+
+### An SSR hydration warning appears
+
+Confirm identical server and client trees and Mingcute package versions.
 
 ## Development
 
@@ -129,7 +182,7 @@ pnpm --filter @mingcute/svelte check
 
 ## License
 
-Licensed under Apache-2.0.
+Licensed under the [Apache License 2.0](../../LICENSE).
 
 ## Links
 

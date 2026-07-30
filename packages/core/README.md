@@ -4,58 +4,140 @@
 
 <h1 align="center">@mingcute/core</h1>
 
-<h3 align="center">Private shared contracts for the Mingcute Icons workspace</h3>
+<h3 align="center">Private architecture contracts for the Mingcute workspace</h3>
 
 <p align="center">
   <a href="https://www.mingcute.com/"><img src="https://img.shields.io/badge/mingcute.com-website-007AFF" alt="Mingcute website" /></a>&nbsp;
   <img src="https://img.shields.io/badge/workspace-private-007AFF" alt="Private workspace package" />&nbsp;
-  <a href="https://bundlephobia.com/package/@mingcute/icons"><img src="https://img.shields.io/bundlephobia/minzip/@mingcute/icons?color=007AFF&label=gzip" alt="Mingcute Icons minified and gzipped size" /></a>&nbsp;
-  <a href="https://www.npmjs.com/package/@mingcute/icons"><img src="https://img.shields.io/npm/dm/@mingcute/icons?color=23AF5F&label=downloads" alt="Mingcute Icons monthly npm downloads" /></a>&nbsp;
-  <a href="https://github.com/mingcute-design/mingcute-icons/stargazers"><img src="https://img.shields.io/github/stars/mingcute-design/mingcute-icons?color=007AFF&style=flat" alt="Mingcute GitHub stars" /></a>&nbsp;
-  <a href="https://x.com/MingCute_icon"><img src="https://img.shields.io/twitter/follow/MingCute_icon?style=social" alt="Follow Mingcute on X" /></a>
+  <a href="https://github.com/mingcute-design/mingcute-icons/stargazers"><img src="https://img.shields.io/github/stars/mingcute-design/mingcute-icons?color=007AFF&style=flat" alt="Mingcute GitHub stars" /></a>
 </p>
 
 ---
 
 ## Overview
 
-`@mingcute/core` is a private workspace package. It is not an npm product and must never be added to an application dependency list. It centralizes architecture rules used by package generators and tests.
+`@mingcute/core` is a private workspace package that defines shared architecture contracts for the Mingcute Icons repository.
 
-This package owns:
+It is not an npm product and must never be installed by consumer applications.
 
-- Core Regular and Filled style declarations;
-- icon and metadata contracts;
-- naming and component-name normalization; and
-- framework adapter contracts.
+The package centralizes:
 
-## Workspace Exports
-
-- `@mingcute/core`: shared contracts and helpers.
-- `@mingcute/core/styles`: style catalogue and resolution.
-- `@mingcute/core/icons`: normalized icon types and naming.
-- `@mingcute/core/adapters`: stable framework adapter contract.
-
-<a href="https://www.mingcute.com/">
-  <img src="https://raw.githubusercontent.com/mingcute-design/mingcute-icons/main/images/banner2.png" alt="Mingcute icons in product interfaces" width="100%" />
-</a>
+- public style declarations;
+- normalized icon and metadata contracts;
+- file, export, and component naming rules;
+- framework adapter build contracts; and
+- deterministic helpers shared by generators and tests.
 
 ## Publication Boundary
 
-The manifest uses `"private": true`, has no `publishConfig`, and is rejected by release guards if it appears as a public runtime dependency. Consumer packages expose self-contained public types or depend on `@mingcute/icons` instead.
+The package manifest uses:
 
-## Maintainer Contract
+```json
+{
+  "private": true
+}
+```
 
-- Style identifiers and icon names are release contracts consumed by every generator.
-- Naming helpers must remain deterministic across operating systems and filesystem order.
-- Adapter contracts describe build output only; they must not introduce framework runtime dependencies here.
-- Changes that affect generated public exports require a coordinated version and regeneration of every consumer package.
-- The package must remain private, side-effect free, and absent from packed public dependency graphs.
+`@mingcute/core` has no public `publishConfig` and must remain absent from every packed consumer dependency graph.
+
+Public packages should either:
+
+- emit self-contained public types; or
+- depend on `@mingcute/icons` for runtime icon definitions.
+
+They must never expose `@mingcute/core` as a runtime dependency.
+
+## Workspace Exports
+
+| Export | Purpose |
+|---|---|
+| `@mingcute/core` | Shared contracts and general helpers |
+| `@mingcute/core/styles` | Style catalogue, identifiers, and resolution |
+| `@mingcute/core/icons` | Icon models, metadata contracts, and naming |
+| `@mingcute/core/adapters` | Stable framework adapter build contracts |
+
+These exports are workspace-internal. They are not public consumer APIs.
+
+## Owned Contracts
+
+### Styles
+
+The package defines the canonical public style catalogue:
+
+- Core Regular
+- Core Filled
+
+Style identifiers are release contracts consumed by:
+
+- the compiler;
+- package generators;
+- export-map generation;
+- metadata generation;
+- tests; and
+- release validation.
+
+### Icons and metadata
+
+The icon contracts define normalized:
+
+- icon names;
+- component names;
+- filenames;
+- view boxes;
+- geometry and paint structures;
+- resource metadata; and
+- generated catalogue metadata.
+
+### Adapter contracts
+
+Adapter contracts describe build output shared across framework generators.
+
+They must remain framework-runtime neutral. Framework-specific runtime dependencies belong in the generated adapter packages, not in `@mingcute/core`.
+
+## Maintainer Rules
+
+- Keep style identifiers and naming rules deterministic.
+- Do not depend on filesystem enumeration order.
+- Normalize paths and names consistently across operating systems.
+- Fix naming collisions at the canonical contract layer rather than adding adapter-specific exceptions.
+- Treat public export names as release contracts.
+- Regenerate every affected package after contract changes.
+- Keep the package side-effect free.
+- Keep framework runtime dependencies out of this package.
+- Keep the package private and absent from packed consumer dependency graphs.
+
+## Change Impact
+
+A change to `@mingcute/core` may require coordinated regeneration when it affects:
+
+- style identifiers;
+- icon names;
+- component names;
+- filenames;
+- metadata shape;
+- adapter output contracts;
+- export-map construction; or
+- generated public TypeScript declarations.
+
+Before merging such a change, run repository-wide checks rather than validating this package in isolation.
 
 ## Troubleshooting
 
-- **A generator cannot resolve a style:** confirm it exists in the Core Regular and Filled catalogue and regenerate from the same workspace version.
-- **Component names collide:** fix canonical naming at the source contract instead of adding adapter-specific exceptions.
-- **A release audit finds `@mingcute/core`:** remove the runtime dependency from the consumer package and generate self-contained public output.
+### A generator cannot resolve a style
+
+Confirm that the style exists in the canonical catalogue and that the generator is running against the same workspace version.
+
+### Component names collide
+
+Fix the canonical naming or collision-resolution contract. Do not add framework-specific exceptions unless the framework itself imposes a unique restriction.
+
+### A release audit finds `@mingcute/core`
+
+Remove the consumer runtime dependency and generate self-contained public output or depend on `@mingcute/icons` where runtime definitions are required.
+
+### Output differs across operating systems
+
+Check path normalization, locale-sensitive comparisons, sorting, and filesystem-order assumptions.
 
 ## Development
 
@@ -65,11 +147,20 @@ pnpm --filter @mingcute/core typecheck
 pnpm --filter @mingcute/core test
 ```
 
+Repository-wide validation is required for contract changes:
+
+```bash
+pnpm build
+pnpm check
+pnpm release:check
+pnpm pack:dry
+```
+
 <img src="https://raw.githubusercontent.com/mingcute-design/mingcute-icons/main/images/banner3.png" alt="Editable Mingcute vector construction" width="100%" />
 
 ## License
 
-This private workspace package is covered by Apache-2.0 and is not published independently.
+This private workspace package is covered by the [Apache License 2.0](../../LICENSE) and is not published independently.
 
 ## Links
 
