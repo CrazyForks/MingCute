@@ -357,3 +357,7 @@ Mingcute Icons is licensed under the [Apache License 2.0](./LICENSE).
 - [Mingcute on X](https://x.com/MingCute_icon)
 - [Issue tracker](https://github.com/mingcute-design/mingcute-icons/issues)
 - [Mingcute GitHub](https://github.com/mingcute-design)
+
+## Preview
+
+<img src="https://raw.githubusercontent.com/mingcute-design/mingcute-docs/main/images/MingCute_icon.png" alt="Preview of Mingcute icons" width="100%" />
