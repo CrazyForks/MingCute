@@ -7,5 +7,10 @@ for (const target of process.argv.slice(2)) {
   if (!destination.startsWith(`${packageRoot}${path.sep}`)) {
     throw new Error(`Refusing to clean outside package: ${target}`);
   }
-  await rm(destination, { recursive: true, force: true });
+  await rm(destination, {
+    recursive: true,
+    force: true,
+    maxRetries: 5,
+    retryDelay: 100,
+  });
 }
